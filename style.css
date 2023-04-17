@@ -1,0 +1,465 @@
+:root {
+    --red: hsl(0, 100%, 40%);
+    --orange: hsl(22, 100%, 50%);
+    --yellow: hsl(60, 100%, 50%);
+    --green: hsl(130, 100%, 15%);
+    --blue: hsl(242, 69%, 49%);
+    --activeRed: hsl(0, 100%, 30%);
+    --activeOrange: hsl(22, 100%, 40%);
+    --activeYellow: hsl(60, 100%, 40%);
+    --activeGreen: hsl(130, 100%, 10%);
+    --activeBlue: hsl(242, 100%, 30%);
+
+    /* --darken: 10; */
+
+    --purple: hsl(280, 100%, 35%);
+
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: linear-gradient(90deg, rgba(73,112,148,1) 0%, rgba(55,76,96,1) 50%, rgba(73,112,148,1) 100%);
+}
+
+.menu {
+   display: none;
+   position: absolute;
+   top: 0;
+   right: 0;
+   margin-right: 3%;
+   margin-top: 2%;
+   font-size: clamp(1em, 2vw + 2em, 10em);
+}
+
+.menu h2 {
+    cursor: pointer;
+}
+
+.counter {
+    display: flex;
+    justify-content: center;
+    /* margin-bottom: 2%;  */
+    font-size: 3em;
+    margin-bottom: 1%;
+    font-family: 'helvetica';
+    -webkit-text-stroke: 0.5px white;
+}
+
+.boardLoading {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1vw;
+}
+
+.boardLoading button {
+    padding: 0.5em;
+    cursor: pointer;
+}
+
+.boardLoading button:active {
+    background-color: rgb(201, 197, 197);
+}
+
+.gameContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 4%;
+}
+
+/* .gameContainer .board {
+    display: flex;
+    justify-content: center;
+    
+} */
+
+.gameContainer .board {
+    margin: auto;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    /* max-width: 36vw;
+    max-height: 36vw; */
+    /* max-width: 36vw;
+    max-height: 36vw; */
+    background-color: rgb(0, 0, 0);
+    border: 2px solid black; 
+    flex-basis: 100%;
+}
+
+.left {
+    flex-basis: 50%;
+    margin-left: 15%;
+}
+
+.right {
+    display: flex;
+    justify-content: top;
+    flex-direction: column;
+    flex-basis: 50%;
+    margin-bottom: 10vw;
+    margin-left: 5vw;
+    font-family: 'helvetica';
+    -webkit-text-stroke: 0.03rem white;
+    margin-right: 10%;
+}
+
+.leaderboard {
+    text-align: center;
+}
+
+.leaderboard h2 {
+    font-size: clamp(1rem, 1vw + 3rem, 7rem);
+}
+
+.score {
+    margin-bottom: 0.5vw;
+    margin-top: 0.5vw;
+}
+
+.squareCounter h2 {
+    text-align: center;
+    margin-bottom: 1vw;
+    font-size: clamp(0.5rem, 1vw + 2rem, 5rem);
+}
+
+.remainContainer {
+    /* display: flex;
+    justify-content: center;
+    flex-wrap: wrap; */
+    margin: auto;
+}
+
+/* .remainContainer .squareRow {
+    display: flex;
+    justify-content: center;
+} */
+
+.squareRow {
+    display: flex;
+    justify-content: center;
+}
+
+ .squareRow .fakeSquare {
+    /* max-width: 50px;
+    max-height: 50px; */
+    /* padding: 3%; */
+    /* justify-content: center; */
+    display: inline-block;
+    /* text-align: center; */
+    border: 1px solid black;
+    width: calc(2vw + 3rem);
+    height: calc(2vw + 3rem);
+    /* margin-left: 1vw; */
+    margin-right: 1vw;
+    pointer-events: none;
+}
+
+.fakeSquare h3 {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    font-size: clamp(1rem, 1vw + 1rem, 5rem);
+    text-align: center;
+}   
+
+
+
+
+
+
+
+/* Color Picker */
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1vw;
+}
+
+.extraRow {
+    display: flex;
+    align-items: center;
+    /* font-size: clamp(1rem, 0.5vw + 1rem, 5rem); */
+    flex-basis: 100%;
+    justify-content: center;
+    margin-bottom: 1vw;
+    user-select: none;
+}
+
+.extraRow div {
+    width: clamp(2vw, 2vw + 2em, 10em);
+    height: clamp(2vw, 2vw + 2em, 10em);
+    background-color: white;
+    border: 0.2vw solid black;
+    border-radius: 50%;
+    margin-right: 0.5vw;
+    margin-left: 0.5vw;
+}
+
+.extraRow div {
+    text-align: center;
+    transition: transform 1s ease-in;
+    cursor: pointer;
+}
+
+.extraRow div h3 {
+    position: relative;
+}
+
+.extraRow .resetButton h3 {
+    font-size: clamp(0.5rem, 0.5vw + 1.35rem, 5rem);
+    top: 22%;
+}
+
+.extraRow .saveButton h3 {
+    font-size: clamp(0.5rem, 0.5vw + 1.35rem, 5rem);
+    top: 25%;
+}
+
+.extraRow .eraseButton h3 {
+    font-size: clamp(0.5rem, 0.5vw + 1.35rem, 5rem);
+    top: 25%;
+}
+
+.extraRow .predictButton h3 {
+    font-size: clamp(0.5rem, 1vw + 1.5rem, 5rem);
+    top: 15%;
+}
+
+.extraRow .resetButton:hover {
+    background-color: lightgray;
+    transform:rotate(360deg);
+}
+
+.extraRow .saveButton:hover {
+    background-color: lightgray;
+}
+
+.extraRow .eraseButton:hover {
+    background-color: lightgray;
+}
+
+.extraRow .predictButton:hover {
+    background-color: lightgray;
+}
+
+.extraRow .resetButton:active {
+    background-color: darkgray;
+}
+
+.extraRow .saveButton:active {
+    background-color: darkgray;
+}
+
+.extraRow .eraseButton:active {
+    background-color: darkgray;
+}
+
+.extraRow .predictButton:active {
+    background-color: darkgray;
+}
+
+/* .extraRow h1 {
+    border: 1px solid black;
+    border-radius: 50%;
+    padding-left: 9px;
+    padding-right: 9px;
+    background-color: aliceblue; 
+} */
+
+/* color palette */
+
+.colorPalette {
+    display: flex;
+    justify-content: center;
+    margin-top: 2vw;
+}
+
+.colorPalette .interior {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding-top: 0.3vw;
+    padding-bottom: 0.3vw;
+    width: 20%;
+    border: 2px solid black;
+    transition: width 0.5s;
+}
+
+.pal {
+    display: inline-flex;
+    flex-direction: column;
+    /* height: 10vw; */
+    cursor: pointer;
+    margin-left: 0.5vw;
+    margin-right: 0.5vw;
+    border: 1px solid black;
+}
+
+.pal .palSquare {
+    width: clamp(0.5em, 1vw + 1em, 5em);
+    height: clamp(0.5em, 1vw + 1em, 5em);
+    border: 1px solid black;
+    /* pointer-events: none; */
+}
+
+.palMain {
+    border: 1px solid black;
+    cursor: default;
+}
+
+.ddl {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+    font-size: 3vw;
+    cursor: pointer;
+}
+
+.color {
+    width: clamp(2vw, 2vw + 2em, 10em);
+    height: clamp(2vw, 2vw + 2em, 10em);
+    background-color: bisque;
+    border-radius: 50%;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    cursor: pointer;
+    border: 0.2vw solid rgb(0, 0, 0)
+}
+
+.color:hover {
+    border: 1px solid black;
+}
+
+.red {
+    background-color: var(--red);
+    transition: background-color 0.5s;
+}
+
+.red:active {
+    background-color: var(--activeRed);
+}
+
+.yellow {
+    background-color: var(--yellow);
+    transition: background-color 0.5s;
+}
+
+.yellow:active {
+    background-color: var(--activeYellow);
+}
+
+.orange {
+    background-color: var(--orange);
+    transition: background-color 0.5s;
+}
+
+.orange:active {
+    background-color: var(--activeOrange);
+}
+
+.green {
+    background-color: var(--green);
+    transition: background-color 0.5s;
+}
+
+.green:active {
+    background-color: var(--activeGreen);
+}
+
+.blue {
+    background-color: var(--blue);
+    transition: background-color 0.5s;
+}
+
+.blue:active {
+    background-color: var(--activeBlue);
+}
+
+.grayed {
+    background-color: rgb(145, 145, 145) !important;
+    border: none;
+    opacity: 10%;
+    pointer-events: none !important;
+}
+
+.active {
+    background-color: rgb(125, 125, 125) !important;
+}
+
+.noClick {
+    cursor: default;
+}
+
+/* Square Styles */
+
+.square {
+    display: flex;
+    flex-basis: 4%;
+    /* width: 4%;
+    height: 4%;  */
+    /* border: 1px solid black; */
+    transition: background-color 0.2s;
+}
+
+/* .changed {
+    background-color: var(--purple)!important;
+} */
+
+.tempChanged {
+    /* background-color: var(--purple)!important; */
+    /* opacity: 50%; */
+    /* border:  dotted white; */
+    opacity: 50%;
+}
+
+/* General Classes */
+
+.hidden {
+    display: none;
+}
+
+.opaque {
+    opacity: 20%;
+}
+
+.show {
+    display: block;
+}
+
+.test {
+    width: 75%  !important;
+}
+
+@media screen and (max-width: 1000px) {
+    .gameContainer {
+        display: block;
+        position: relative;
+    }
+
+    .left {
+        margin: auto;
+        z-index: 1;
+    }
+
+    .right {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -120%);
+        margin: auto;
+    }
+
+    .menu {
+        display: block;
+        z-index: 2;
+    }
+}
