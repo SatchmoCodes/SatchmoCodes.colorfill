@@ -85,7 +85,7 @@ window.addEventListener('load', (event) => {
     }
     let x = calculateSize()
     if (x <= 1000) {
-        menuOverlay.classList.add('hidden')
+        colorPalette.classList.add('hidden')
     }
 })
 
@@ -518,12 +518,15 @@ function width() {
     
     if (palContainer.classList.contains('test')) {
         palContainer.classList.remove('test')
-        ddlArrow.innerText = '🠺'
+        // ddlArrow.innerText = '🠺'
+        ddlArrow.classList.remove('flip')
+        
         otherColors.classList.add('hidden')
     }
     else {
         palContainer.classList.add('test')
-        ddlArrow.innerText = '🠸'
+        // ddlArrow.innerText = '🠸'
+        ddlArrow.classList.add('flip')
         otherColors.classList.remove('hidden')
     }
 }
@@ -602,9 +605,10 @@ function importBoard() {
 
 window.addEventListener('resize', calculateSize)
 
-let menuOverlay = document.querySelector('.right')
+let colorPalette = document.querySelector('.colorPalette')
 let menu = document.querySelector('.menu')
 let game = document.querySelector('.left')
+let lBoard = document.querySelector('.scoreWrap')
 let ham = document.querySelector('.ham')
 let xMark = document.querySelector('xMark')
 
@@ -644,14 +648,16 @@ function changeMenu() {
     console.log('hi')
     if (game.classList.contains('opaque')) {
         game.classList.remove('opaque')
+        lBoard.classList.remove('opaque')
         ham.classList.remove('fa', 'fa-close')
         ham.classList.add('fa', 'fa-list')
-        menuOverlay.classList.add('hidden')
+        colorPalette.classList.add('hidden')
     }
     else {
         game.classList.add('opaque')
+        lBoard.classList.add('opaque')
         ham.classList.remove('fa', 'fa-list')
         ham.classList.add('fa', 'fa-close')
-        menuOverlay.classList.remove('hidden')
+        colorPalette.classList.remove('hidden')
     }
 }
