@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="script.js" defer></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
+    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="menu" onclick="changeMenu()">
         <h2 class="fa fa-list ham"></h2>
-        <!-- <h2 class="fa fa-close xMark" onclick="changeMenu()"></h2> -->
     </div>
     <section class="gameContainer">
         
@@ -32,7 +32,7 @@
             <section class="buttonContainer">
                 <div class="extraRow">
                     <div class="resetButton" onclick="reset()">
-                        <h3>&orarr;</h3>
+                        <h3 class="fa fa-rotate-right"></h3>
                     </div>
                     <div class="saveButton" onclick="save()">
                         <h3 class="fa fa-save"></h3>
@@ -54,31 +54,33 @@
 
         </div>
         <div class="right">
-            <div class="leaderboard">
-                <h2>High Score</h2>
-                <h2 class="score">0</h2>
-            </div>
-            <div class="squareCounter">
-                <h2>Squares Remaining</h2>
-                    <div class="remainContainer">
-                        
+            <div class="scoreWrap">
+                <div class="leaderboard">
+                    <h2>High Score</h2>
+                    <h2 class="score">0</h2>
                 </div>
-                <div class="squareRow">
-                    <div class="fakeSquare red">
-                        <h3 class="redCounter"></h3>
+                <div class="squareCounter">
+                    
+                            
                     </div>
-                    <div class="fakeSquare orange">
-                        <h3 class="orangeCounter"></h3>
+                    <div class="squareRow">
+                        <div class="fakeSquare red">
+                            <h3 class="redCounter"></h3>
+                        </div>
+                        <div class="fakeSquare orange">
+                            <h3 class="orangeCounter"></h3>
+                        </div>
+                        <div class="fakeSquare yellow">
+                            <h3 class="yellowCounter"></h3>
+                        </div>
+                        <div class="fakeSquare green">
+                            <h3 class="greenCounter"></h3>
+                        </div>
+                        <div class="fakeSquare blue">
+                            <h3 class="blueCounter"></h3>
+                        </div>
                     </div>
-                    <div class="fakeSquare yellow">
-                        <h3 class="yellowCounter"></h3>
-                    </div>
-                    <div class="fakeSquare green">
-                        <h3 class="greenCounter"></h3>
-                    </div>
-                    <div class="fakeSquare blue">
-                        <h3 class="blueCounter"></h3>
-                    </div>
+                    <h2 class="remain">Squares Remaining</h2>
                 </div>
             <section class="colorPalette">
                 <div class="interior widthChange">
@@ -127,7 +129,7 @@
                         </div>
                     </div>
                     <div class="ddl" onclick="width()">
-                        <h3 class="ddlArrow">&#129082;</h3>
+                        <h3 class="ddlArrow fa fa-play"></h3>
                         <!-- <h3>&#129080;</h3> -->
                     </div>
                 </div>
