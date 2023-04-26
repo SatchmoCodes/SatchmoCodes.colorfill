@@ -26,6 +26,7 @@
 
 body {
     background: linear-gradient(90deg, rgba(73,112,148,1) 0%, rgba(55,76,96,1) 50%, rgba(73,112,148,1) 100%);
+    /* background-color: black; */
 }
 
 .menu {
@@ -70,7 +71,7 @@ body {
 .gameContainer {
     display: flex;
     justify-content: center;
-    margin-top: 4%;
+    margin-top: 2%;
 }
 
 /* .gameContainer .board {
@@ -86,8 +87,8 @@ body {
     flex-wrap: wrap;
     /* max-width: 36vw;
     max-height: 36vw; */
-    /* max-width: 36vw;
-    max-height: 36vw; */
+    max-width: 900px;
+    max-height: 900px;
     background-color: rgb(255, 255, 255);
     border: 2px solid black; 
     flex-basis: 100%;
@@ -419,8 +420,8 @@ body {
 .square {
     display: flex;
     flex-basis: 4%;
-    /* width: 4%;
-    height: 4%;  */
+    max-width: 36px;
+    max-height: 36px;
     /* border: 1px solid black; */
     transition: background-color 0.2s;
 }
