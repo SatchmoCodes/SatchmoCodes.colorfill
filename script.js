@@ -613,11 +613,12 @@ let ham = document.querySelector('.ham')
 let xMark = document.querySelector('xMark')
 
 function calculateSize() {
-    let winLength = screen.width
+    let winLength = window.innerWidth
+    let winHeight = window.innerHeight
     if (winLength >= 1001) {
         console.log(winLength)
-    let width = winLength * .35
-    let height = winLength * .35
+    let width = winHeight * .65
+    let height = winHeight * .65
     gameBoard.style.width = width + 'px'
     gameBoard.style.height = height + 'px'
     }
