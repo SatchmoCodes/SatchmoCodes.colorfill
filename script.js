@@ -250,7 +250,6 @@ document.querySelectorAll(".color").forEach(color =>
 
 
 function colorChange(c) {
-    console.log(c)
     counter++
     counterLabel.innerText = counter
     document.querySelectorAll('.changed').forEach(changedSquare => {
