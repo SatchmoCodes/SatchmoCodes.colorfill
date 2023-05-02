@@ -232,22 +232,30 @@ function initialCheck() {
 
 initialCheck()
 
+document.querySelectorAll(".color").forEach(color =>
+    color.addEventListener("click", event => {
+        console.log('hi')
+        console.log(color)
+        colors.forEach(color => {0
+            if (color.classList.contains('grayed')) {
+                color.classList.remove('grayed')
+            }
+        })
+        color.classList.add('grayed')
+        color.onclick = null
+        let c = event.target.getAttribute('data-color')
+        colorChange(c)
+    }))
+
 
 
 function colorChange(c) {
-    colors.forEach(color => {0
-        if (color.classList.contains('grayed')) {
-            color.classList.remove('grayed')
-            color.setAttribute('onclick', 'colorChange(this)')
-        }
-        c.classList.add('grayed')
-        c.onclick = null
-    })
+    console.log(c)
     counter++
     counterLabel.innerText = counter
     document.querySelectorAll('.changed').forEach(changedSquare => {
-        changedSquare.dataset.color = c.dataset.color
-        changedSquare.style.backgroundColor = c.dataset.color
+        changedSquare.dataset.color = c
+        changedSquare.style.backgroundColor = c
         // console.log('run: ' + j)
     })
 
