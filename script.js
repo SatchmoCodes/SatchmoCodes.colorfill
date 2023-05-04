@@ -234,9 +234,10 @@ initialCheck()
 
 document.querySelectorAll(".color").forEach(color =>
     color.addEventListener("click", event => {
-        console.log('hi')
+        if (!color.classList.contains('noClick')) {
+            console.log('hi')
         console.log(color)
-        colors.forEach(color => {0
+        colors.forEach(color => {
             if (color.classList.contains('grayed')) {
                 color.classList.remove('grayed')
             }
@@ -245,12 +246,14 @@ document.querySelectorAll(".color").forEach(color =>
         color.onclick = null
         let c = event.target.getAttribute('data-color')
         colorChange(c)
+        } 
     }))
 
 
 
 function colorChange(c) {
     counter++
+    console.log(counter)
     counterLabel.innerText = counter
     document.querySelectorAll('.changed').forEach(changedSquare => {
         changedSquare.dataset.color = c
@@ -380,6 +383,34 @@ square.forEach(sq => {
 }
 
 let predictButton = document.querySelector('.predictButton')
+
+document.querySelectorAll(".color").forEach(color =>
+    color.addEventListener("mouseover", event => {
+        console.log('hi')
+        // if (predictButton.classList.contains('active')) {
+        //     predictButton.classList.remove('active')
+        //     colors.forEach(color => {
+        //         color.classList.remove('noClick')     
+        //     })
+        //     for (let h = changedArray.length - 1; h >= 0; h--) {
+        //         // changedArray[h].dataset.color = c.dataset.color
+        //         if (changedArray[h].classList.contains('tempChanged')) {
+        //             changedArray.splice(h, 1)
+        //         }
+        //     }
+        //      square.forEach(sq => {
+        //     if (sq.classList.contains('tempChanged')) {
+        //         sq.classList.remove('tempChanged')
+        //     }
+        // })
+        // }
+        // else {
+        //     predictButton.classList.add('active')
+        //     colors.forEach(color => {
+        //         color.classList.add('noClick')
+        //     })
+        // }
+    }))
 
 function predictSwitch() {
     if (predictButton.classList.contains('active')) {
