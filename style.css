@@ -291,6 +291,9 @@ body {
     display: flex;
     justify-content: center;
     margin-top: 2vw;
+    max-height: 20em;
+    overflow: hidden;
+    
 }
 
 .colorPalette .interior {
@@ -518,6 +521,8 @@ body {
         width: 100%;
         opacity: 100% !important;
         z-index: 2;
+        max-height: 7em;
+        overflow: hidden;
     }
 
     .leaderboard {
