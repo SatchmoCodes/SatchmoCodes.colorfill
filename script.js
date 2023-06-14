@@ -1,14 +1,172 @@
-let gameBoard = document.querySelector('.board')
-let colorWheel = ['var(--red)', 'var(--orange)', 'var(--yellow)', 'var(--green)', 'var(--blue)']
-let colors = document.querySelectorAll('.color')
-let total = 1
+class Square {
+    constructor(rowIndex, colIndex, color, defaultColor, element, captured) {
+      this.rowIndex = rowIndex
+      this.colIndex = colIndex
+      this.color = color
+      this.defaultColor = defaultColor
+      this.element = element
+      this.captured = captured
+      this.tempChecked = false
+    }
+    setSquareCounter() {
+        if (this.defaultColor == 'var(--red)') {
+            !capturing ? redCounter++ : redCounter--
+        }
+        if (this.defaultColor == 'var(--orange)') {
+            !capturing ? orangeCounter++ : orangeCounter--
+        }
+        if (this.defaultColor == 'var(--yellow)') {
+           !capturing ? yellowCounter++ : yellowCounter--
+        }
+        if (this.defaultColor == 'var(--green)') {
+            !capturing ? greenCounter++ : greenCounter--
+        }
+        if (this.defaultColor == 'var(--blue)') {
+            !capturing ? blueCounter++ : blueCounter--
+        }
+        redCounterLabel.textContent = redCounter
+        orangeCounterLabel.textContent = orangeCounter
+        yellowCounterLabel.textContent = yellowCounter
+        greenCounterLabel.textContent = greenCounter
+        blueCounterLabel.textContent = blueCounter
+    }
+    captureCheck(color) {
+        if (this.captured) {
+            this.color = color
+            !predicting ? this.element.style.backgroundColor = color : this.element.style.backgroundColor = this.element.style.backgroundColor
+            //square right
+            if (squareArr[this.rowIndex][this.colIndex + 1] != null && squareArr[this.rowIndex][this.colIndex + 1].captured == false) {
+                if (this.color == squareArr[this.rowIndex][this.colIndex + 1].color) {
+                    squareArr[this.rowIndex][this.colIndex + 1].captured = true
+                    predicting ? squareArr[this.rowIndex][this.colIndex + 1].tempChecked = true : squareArr[this.rowIndex][this.colIndex + 1].tempChecked = false
+                    !predicting ? squareArr[this.rowIndex][this.colIndex + 1].element.style.backgroundColor = color : squareArr[this.rowIndex][this.colIndex + 1].element.classList.add('tempChanged')
+                    squareArr[this.rowIndex][this.colIndex + 1].captureCheck(color)
+                    if (!predicting) {
+                        squareArr[this.rowIndex][this.colIndex + 1].setSquareCounter()
+                    }
+                }
+            }
+            //square left
+            if (squareArr[this.rowIndex][this.colIndex - 1] != null && squareArr[this.rowIndex][this.colIndex - 1].captured == false) {
+                if (this.color == squareArr[this.rowIndex][this.colIndex - 1].color) {
+                    squareArr[this.rowIndex][this.colIndex - 1].captured = true
+                    predicting ? squareArr[this.rowIndex][this.colIndex - 1].tempChecked = true : squareArr[this.rowIndex][this.colIndex - 1].tempChecked = false
+                    !predicting ? squareArr[this.rowIndex][this.colIndex - 1].element.style.backgroundColor = color : squareArr[this.rowIndex][this.colIndex - 1].element.classList.add('tempChanged')
+                    squareArr[this.rowIndex][this.colIndex - 1].captureCheck(color)
+                    if (!predicting) {
+                        squareArr[this.rowIndex][this.colIndex - 1].setSquareCounter()
+                    }
+                }
+            }
+            //square down
+            if (this.rowIndex <= 23 && squareArr[this.rowIndex + 1][this.colIndex] != null && squareArr[this.rowIndex + 1][this.colIndex].captured == false) {
+                if (this.color == squareArr[this.rowIndex + 1][this.colIndex].color) {
+                    squareArr[this.rowIndex + 1][this.colIndex].captured = true
+                    predicting ? squareArr[this.rowIndex + 1][this.colIndex].tempChecked = true : squareArr[this.rowIndex + 1][this.colIndex].tempChecked = false 
+                    !predicting ? squareArr[this.rowIndex + 1][this.colIndex].element.style.backgroundColor = color : squareArr[this.rowIndex + 1][this.colIndex].element.classList.add('tempChanged')
+                    squareArr[this.rowIndex + 1][this.colIndex].captureCheck(color)
+                    if (!predicting) {
+                        squareArr[this.rowIndex + 1][this.colIndex].setSquareCounter()
+                    }
+                }
+            }
+            //square up
+            if (this.rowIndex != 0 && squareArr[this.rowIndex - 1][this.colIndex] != null && squareArr[this.rowIndex - 1][this.colIndex].captured == false) {
+                if (this.color == squareArr[this.rowIndex - 1][this.colIndex].color) {
+                    squareArr[this.rowIndex - 1][this.colIndex].captured = true
+                    predicting ? squareArr[this.rowIndex - 1][this.colIndex].tempChecked = true : squareArr[this.rowIndex - 1][this.colIndex].tempChecked = false 
+                    !predicting ? squareArr[this.rowIndex - 1][this.colIndex].element.style.backgroundColor = color : squareArr[this.rowIndex - 1][this.colIndex].element.classList.add('tempChanged')
+                    squareArr[this.rowIndex - 1][this.colIndex].captureCheck(color)
+                    if (!predicting) {
+                        squareArr[this.rowIndex - 1][this.colIndex].setSquareCounter()
+                    }
+                }
+            }
+          }
+    }
+}
 
-// square counter
-let redCounterLabel = document.querySelector('.redCounter')
-let orangeCounterLabel = document.querySelector('.orangeCounter')
-let yellowCounterLabel = document.querySelector('.yellowCounter')
-let greenCounterLabel = document.querySelector('.greenCounter')
-let blueCounterLabel = document.querySelector('.blueCounter')
+function resetBoard(loadString) {
+    redCounter = 0
+    orangeCounter = 0
+    yellowCounter = 0
+    greenCounter = 0
+    blueCounter = 0
+    counterLabel.textContent = 0
+    let i = 0 //tracks incrementing for loadString if it isnt null
+    capturing = false
+    if (saving == true) {
+        squareArr.forEach(row => {
+            row.forEach(sq => {
+                sq.color = sq.defaultColor
+                sq.element.style.backgroundColor = sq.defaultColor
+                sq.captured = false
+                sq.setSquareCounter()
+            })
+        })
+    }
+    else {
+        loadString == null ? console.log('null') : console.log('load string 0: ' + loadString.charAt(0))
+        let randomNumberArr = []
+            for (let x = 0; x < 625; x++) {
+                loadString == null ? randomNumberArr[x] = colors[Math.floor(Math.random() * 5)] : randomNumberArr[x] = colors[parseInt(loadString.charAt(x))]
+            }
+        console.log(randomNumberArr)
+        squareArr = new Array(25).fill(0).map((_, rowIndex) => new Array(25).fill(0).map((_, colIndex) => ({ value: 0, rowIndex, colIndex }))); //initialize new object array
+        let boardLoading = document.querySelector('.boardLoading')
+        document.querySelector('.board').remove()
+        let squareContainer = document.createElement('div')
+        squareContainer.classList.add('board')
+        boardLoading.parentNode.insertBefore(squareContainer, boardLoading.nextSibling) //reset and insert new board
+
+        squareArr.forEach(row => {
+            row.forEach(({ value, rowIndex, colIndex }) => {
+            let captured = false
+            let color = randomNumberArr[i]
+            const squareElement = document.createElement('div');
+            squareElement.classList.add('square');
+            squareElement.style.backgroundColor = color
+            let square = new Square(rowIndex, colIndex, color, color, squareElement, captured)
+            square.setSquareCounter()
+            squareContainer.appendChild(squareElement);
+            row.splice(colIndex, 1, square)
+            i++
+            })
+        })
+    }
+    squareArr[0][0].captured = true
+    capturing = true
+    squareArr[0][0].setSquareCounter()
+    squareArr[0][0].captureCheck(squareArr[0][0].color)
+    capturing = false
+    colorButtons.forEach(color => {
+    color.classList.remove('grayed')
+    if (color.dataset.color == squareArr[0][0].color) {
+        color.classList.add('grayed')
+    }
+    })
+}
+
+
+
+const colors = ['var(--red)', 'var(--orange)', 'var(--yellow)', 'var(--green)', 'var(--blue)']
+
+let colorButtons = document.querySelectorAll('.color')
+
+let resetButton = document.querySelector('.resetButton')
+let saveButton = document.querySelector('.saveButton')
+let radarButton = document.querySelector('.predictButton')
+
+let colorPalette = document.querySelector('.colorPalette') //element to hide color palette
+let palContainer = document.querySelector('.widthChange')
+let palButton = document.querySelector('.ddl')
+let ddlArrow = document.querySelector('.ddlArrow')
+let otherColors = document.querySelector('.otherColors') //container of other colors in color palette
+let colorOptions = document.querySelectorAll('.option') //click event label for each color
+
+let capturing = false //determine whether to increment or decrement square counters
+let saving = false //determine if user is saving board
+let predicting = false //determine if radar button is checked
 
 let redCounter = 0
 let orangeCounter = 0
@@ -16,675 +174,135 @@ let yellowCounter = 0
 let greenCounter = 0
 let blueCounter = 0
 
-// console.log(gameBoard.clientWidth)
-
-
-// let finishedArray = []
-let highScore = 0
-let highScoreLabel = document.querySelector('.score')
-
-
+let redCounterLabel = document.querySelector('.redCounter')
+let orangeCounterLabel = document.querySelector('.orangeCounter')
+let yellowCounterLabel = document.querySelector('.yellowCounter')
+let greenCounterLabel = document.querySelector('.greenCounter')
+let blueCounterLabel = document.querySelector('.blueCounter')
 let counterLabel = document.querySelector('.counter')
-let counter = 0
 
-let saveButton = document.querySelector('.saveButton')
-
-let colorHolder = []
-
-for (let y = 25; y > 0; y--) {
-    for (let x = 1; x < 26; x++) {
-        let square = document.createElement('div')
-        let rand = Math.floor(Math.random() * 5)
-        square.classList.add('square')
-        square.dataset.x = x
-        square.dataset.y = y
-        square.dataset.color = colorWheel[rand]
-        square.dataset.num = total
-        square.dataset.defaultColor = colorWheel[rand]
-        square.style.backgroundColor = colorWheel[rand]
-        gameBoard.append(square)
-        total++
-    }
-}
-let square = document.querySelectorAll('.square')
-
-square.forEach(sq => {
-    if (sq.dataset.color == colorWheel[0] && !sq.classList.contains('changed')) {
-        redCounter++
-    }
-    if (sq.dataset.color == colorWheel[1] && !sq.classList.contains('changed')) {
-        orangeCounter++
-    }
-    if (sq.dataset.color == colorWheel[2] && !sq.classList.contains('changed')) {
-        yellowCounter++
-    }
-    if (sq.dataset.color == colorWheel[3] && !sq.classList.contains('changed')) {
-        greenCounter++
-    }
-    if (sq.dataset.color == colorWheel[4] && !sq.classList.contains('changed')) {
-        blueCounter++
-    }
-    redCounterLabel.innerText = redCounter
-    orangeCounterLabel.innerText = orangeCounter
-    yellowCounterLabel.innerText = yellowCounter
-    greenCounterLabel.innerText = greenCounter
-    blueCounterLabel.innerText = blueCounter
-}) 
-
-
-square[0].classList.add('changed')
-let changedArray = []
-changedArray.push(square[0])
-
-window.addEventListener('load', (event) => {
-    for (let w = 0; w < colorWheel.length; w++) {
-        // console.log(colorWheel[w])
-        if (colorWheel[w] == changedArray[0].dataset.color) {
-            colors[w].classList.add('grayed')
-        }
-    }
-    let x = calculateSize()
-    if (x <= 1000) {
-        colorPalette.classList.add('hidden')
-    }
-})
-
-function reset() {
-    if (colorHolder.length == 0) {
-        console.log('new board')
-    square.forEach(sq => {
-        sq.classList.remove('changed')
-        rand = Math.floor(Math.random() * 5)
-        sq.dataset.color = colorWheel[rand]
-        sq.dataset.defaultColor = colorWheel[rand]
-        sq.style.backgroundColor = colorWheel[rand]
-    })
-    }
-    else {
-        console.log('loading save')
-        for (let u = 0; u < square.length; u++) {
-            if (square[u].classList.contains('changed')) {
-                square[u].classList.remove('changed')
-            }
-            // console.log(colorHolder[u])
-            square[u].dataset.color = colorHolder[u]
-            square[u].style.backgroundColor = colorHolder[u]
-        }
-    }
-    colors.forEach(color => {
-        if (color.classList.contains('grayed')) {
-            color.classList.remove('grayed')
-            color.setAttribute('onclick', 'colorChange(this)')
-        }
-    })
-    square[0].classList.add('changed')
-    changedArray = []
-    changedArray.push(square[0])
-    counter = 0
-    counterLabel.innerText = counter
-    let redCounter = 0
-    let orangeCounter = 0
-    let yellowCounter = 0
-    let greenCounter = 0
-    let blueCounter = 0
-    for (let w = 0; w < colorWheel.length; w++) {
-        // console.log(colorWheel[w])
-        if (colorWheel[w] == changedArray[0].dataset.color) {
-            colors[w].classList.add('grayed')
-        }
-    }
-
-    initialCheck()
-    
-    square.forEach(sq => {
-        sq.classList.remove('tempChanged')
-        if (sq.dataset.color == colorWheel[0] && !sq.classList.contains('changed')) {
-            redCounter++
-        }
-        if (sq.dataset.color == colorWheel[1] && !sq.classList.contains('changed')) {
-            orangeCounter++
-        }
-        if (sq.dataset.color == colorWheel[2] && !sq.classList.contains('changed')) {
-            yellowCounter++
-        }
-        if (sq.dataset.color == colorWheel[3] && !sq.classList.contains('changed')) {
-            greenCounter++
-        }
-        if (sq.dataset.color == colorWheel[4] && !sq.classList.contains('changed')) {
-            blueCounter++
-        }
-        redCounterLabel.innerText = redCounter
-        orangeCounterLabel.innerText = orangeCounter
-        yellowCounterLabel.innerText = yellowCounter
-        greenCounterLabel.innerText = greenCounter
-        blueCounterLabel.innerText = blueCounter
-    }) 
-    
-}
-
-
-
-function save() {
-    colorHolder = []
-    console.log('saving board')
-    square.forEach(sq => {
-        colorHolder.push(sq.dataset.defaultColor)
-    })
-    console.log(colorHolder)
-    saveButton.classList.add('active')
-}
-
-function del() {
-    colorHolder.length = 0
-    saveButton.classList.remove('active')
-}
-
-function initialCheck() {
-    for (let i = 0; i < changedArray.length; i++ ) {
-        let num = parseInt(changedArray[i].dataset.num)
-
-    if (square[num] != null) {
-    if (square[num - 1].dataset.color == square[num].dataset.color && Math.abs(square[num - 1].dataset.x - square[num].dataset.x) == 1)
-    {
-        if (!changedArray.includes(square[num])) {
-            square[num].classList.add('changed')
-            // console.log('length: ' + changedSquare.length)
-            changedArray.push(square[num])
-        }
-    }
-    }
-    if (square[num + 24] != null) {
-    if (square[num - 1].dataset.color == square[num + 24].dataset.color && square[num + 24].dataset.y > 0)
-    {
-        if (!changedArray.includes(square[num + 24])) {
-            square[num + 24].classList.add('changed')
-            // console.log('length: ' + changedSquare.length)
-            changedArray.push(square[num + 24])
-        }
-    }
-    }
-    // horizontal left movement
-    if (square[num - 2] != null) {
-        if (square[num - 1].dataset.color == square[num - 2].dataset.color && Math.abs(square[num - 1].dataset.x - square[num - 2].dataset.x) == 1) {
-            if (!changedArray.includes(square[num - 2])) {
-                square[num - 2].classList.add('changed')
-                // console.log('length: ' + changedSquare.length)
-                changedArray.push(square[num - 2])
-            }
-        }
-    }
-    // vertical up movement
-    if (square[num - 26] != null) {
-        if (square[num - 1].dataset.color == square[num - 26].dataset.color && square[num - 26].dataset.y < 26) {
-            if (!changedArray.includes(square[num - 26])) {
-                square[num - 26].classList.add('changed')
-                // console.log('length: ' + changedSquare.length)
-                changedArray.push(square[num - 26])
-            }
-        }
-    }
-}
-}
-
-
-
-
-
-initialCheck()
-
-document.querySelectorAll(".color").forEach(color =>
-    color.addEventListener("click", event => {
-        if (!color.classList.contains('noClick')) {
-            console.log('hi')
-        console.log(color)
-        colors.forEach(color => {
-            if (color.classList.contains('grayed')) {
-                color.classList.remove('grayed')
-            }
-        })
-        color.classList.add('grayed')
-        color.onclick = null
-        let c = event.target.getAttribute('data-color')
-        colorChange(c)
-        } 
-    }))
-
-
-
-function colorChange(c) {
-    counter++
-    console.log(counter)
-    counterLabel.innerText = counter
-    document.querySelectorAll('.changed').forEach(changedSquare => {
-        changedSquare.dataset.color = c
-        changedSquare.style.backgroundColor = c
-        // console.log('run: ' + j)
-    })
-
-    // changedArray.forEach(item => {
-    //     if (!finishedArray.includes(item)) {
-    //         finishedArray.push(item)
-    //         console.log('finishedArray contents: ' + item.dataset.num)
-    //     }
-    // })
-
-    // changedArray = []
-
-    // changedSquare = document.querySelectorAll('.changed')
-
-    // using classlist loop
-    
-    // for (let i = 0; i < changedSquare.length; i++) {
-    // console.log("num: " + changedSquare[i].dataset.num)
-    // let num = parseInt(changedSquare[i].dataset.num)
-
-    //using array loop
-
-    for (let i = 0; i < changedArray.length; i++ ) {
-        let num = parseInt(changedArray[i].dataset.num)
-    // console.log(num)
-    // console.log('Starting Square: ' + square[num - 1].getAttribute('data-color'))
-    // console.log('Adjacent Right Square: ' + square[num].getAttribute('data-color'))
-    // console.log('Square Below: ' + square[num + 24].getAttribute('data-color'))
-    // console.log(square[num + 24].dataset.num)
-    // console.log("fail num x: " + num)
-
-    // horizontal right movement
-    if (square[num] != null) {
-    if (square[num - 1].dataset.color == square[num].dataset.color && Math.abs(square[num - 1].dataset.x - square[num].dataset.x) == 1)
-    {
-        // console.log('right')
-        if (!changedArray.includes(square[num])) {
-            // console.log('sick')
-            square[num].classList.add('changed')
-            // console.log('length: ' + changedSquare.length)
-            changedArray.push(square[num])
-        }
-    }
-    }
-    if (square[num + 24] != null) {
-    if (square[num - 1].dataset.color == square[num + 24].dataset.color && square[num + 24].dataset.y > 0)
-    {
-        if (!changedArray.includes(square[num + 24])) {
-            square[num + 24].classList.add('changed')
-            // console.log('length: ' + changedSquare.length)
-            changedArray.push(square[num + 24])
-        }
-    }
-    }
-
-    // horizontal left movement
-    if (square[num - 2] != null) {
-        if (square[num - 1].dataset.color == square[num - 2].dataset.color && Math.abs(square[num - 1].dataset.x - square[num - 2].dataset.x) == 1) {
-            if (!changedArray.includes(square[num - 2])) {
-                square[num - 2].classList.add('changed')
-                // console.log('length: ' + changedSquare.length)
-                changedArray.push(square[num - 2])
-            }
-        }
-    }
-
-    // vertical up movement
-    if (square[num - 26] != null) {
-        if (square[num - 1].dataset.color == square[num - 26].dataset.color && square[num - 26].dataset.y < 26) {
-            if (!changedArray.includes(square[num - 26])) {
-                square[num - 26].classList.add('changed')
-                // console.log('length: ' + changedSquare.length)
-                changedArray.push(square[num - 26])
-            }
-        }
-    } 
-}
-
-redCounter = 0
-orangeCounter = 0
-yellowCounter = 0
-greenCounter = 0
-blueCounter = 0
-
-
-square.forEach(sq => {
-    if (sq.dataset.color == colorWheel[0] && !sq.classList.contains('changed')) {
-        redCounter++
-    }
-    if (sq.dataset.color == colorWheel[1] && !sq.classList.contains('changed')) {
-        orangeCounter++
-    }
-    if (sq.dataset.color == colorWheel[2] && !sq.classList.contains('changed')) {
-        yellowCounter++
-    }
-    if (sq.dataset.color == colorWheel[3] && !sq.classList.contains('changed')) {
-        greenCounter++
-    }
-    if (sq.dataset.color == colorWheel[4] && !sq.classList.contains('changed')) {
-        blueCounter++
-    }
-    redCounterLabel.innerText = redCounter
-    orangeCounterLabel.innerText = orangeCounter
-    yellowCounterLabel.innerText = yellowCounter
-    greenCounterLabel.innerText = greenCounter
-    blueCounterLabel.innerText = blueCounter
-})  
-// console.log('length: ' + changedSquare.length)
-    if (changedArray.length > 624) {
-        
-        if (counter < highScore || highScore == 0) {
-            highScore = counter
-            highScoreLabel.innerText = highScore
-            // alert('New Record! You won in ' + counter + " turns!")
-            // setTimeout(reset, 1000)
-        }
-        else {
-            // alert('Congrats! You won in ' + counter + " turns!")
-            // setTimeout(reset, 1000)
-        }
-        
-    }
-}
-
-let predictButton = document.querySelector('.predictButton')
-
-document.querySelectorAll(".color").forEach(color =>
-    color.addEventListener("mouseover", event => {
-        console.log('hi')
-        // if (predictButton.classList.contains('active')) {
-        //     predictButton.classList.remove('active')
-        //     colors.forEach(color => {
-        //         color.classList.remove('noClick')     
-        //     })
-        //     for (let h = changedArray.length - 1; h >= 0; h--) {
-        //         // changedArray[h].dataset.color = c.dataset.color
-        //         if (changedArray[h].classList.contains('tempChanged')) {
-        //             changedArray.splice(h, 1)
-        //         }
-        //     }
-        //      square.forEach(sq => {
-        //     if (sq.classList.contains('tempChanged')) {
-        //         sq.classList.remove('tempChanged')
-        //     }
-        // })
-        // }
-        // else {
-        //     predictButton.classList.add('active')
-        //     colors.forEach(color => {
-        //         color.classList.add('noClick')
-        //     })
-        // }
-    }))
-
-function predictSwitch() {
-    if (predictButton.classList.contains('active')) {
-        predictButton.classList.remove('active')
-        colors.forEach(color => {
-            color.removeAttribute('onmouseover', 'predictColor(this)') 
-            color.setAttribute('onclick', 'colorChange(this)')  
-            color.classList.remove('noClick')     
-        })
-        for (let h = changedArray.length - 1; h >= 0; h--) {
-            // changedArray[h].dataset.color = c.dataset.color
-            if (changedArray[h].classList.contains('tempChanged')) {
-                changedArray.splice(h, 1)
-            }
-        }
-         square.forEach(sq => {
-        if (sq.classList.contains('tempChanged')) {
-            sq.classList.remove('tempChanged')
-        }
-    })
-    }
-    else {
-        predictButton.classList.add('active')
-        colors.forEach(color => {
-            color.setAttribute('onmouseover', 'predictColor(this)')
-            color.removeAttribute('onclick', 'colorChange(this)')
-            color.classList.add('noClick')
-        })
-    }
-}
-
-function predictColor(c) {
-    // console.log(c.dataset.color)
-    // console.log(c)
-
-    // console.log('length start: ' + changedArray.length)
-
-    
-
-    for (let h = changedArray.length - 1; h >= 0; h--) {
-        // changedArray[h].dataset.color = c.dataset.color
-        if (changedArray[h].classList.contains('tempChanged')) {
-            changedArray.splice(h, 1)
-        }
-    }
-
-    square.forEach(sq => {
-        if (sq.classList.contains('tempChanged')) {
-            sq.classList.remove('tempChanged')
-        }
-    })
-
-    changedArray.forEach(item => {
-        item.dataset.color = c.dataset.color
-    })
-    
-
-    // console.log('length after clears: ' + changedArray.length)
-    
-
-    for (let i = 0; i < changedArray.length; i++ ) {
-        let num = parseInt(changedArray[i].dataset.num)
-
-
-    // horizontal right movement
-    if (square[num] != null) {
-    if (square[num - 1].dataset.color == square[num].dataset.color && Math.abs(square[num - 1].dataset.x - square[num].dataset.x) == 1)
-    {
-        if (!changedArray.includes(square[num]) && !square[num].classList.contains('changed')) {
-            square[num].classList.add('tempChanged')
-            // console.log('length: ' + changedSquare.length)
-            changedArray.push(square[num])
-        }
-    }
-    }
-    if (square[num + 24] != null) {
-    if (square[num - 1].dataset.color == square[num + 24].dataset.color && square[num + 24].dataset.y > 0)
-    {
-        if (!changedArray.includes(square[num + 24]) && !square[num + 24].classList.contains('changed')) {
-            square[num + 24].classList.add('tempChanged')
-            // console.log('length: ' + changedSquare.length)
-            changedArray.push(square[num + 24])
-        }
-    }
-    }
-
-    // horizontal left movement
-    if (square[num - 2] != null) {
-        if (square[num - 1].dataset.color == square[num - 2].dataset.color && Math.abs(square[num - 1].dataset.x - square[num - 2].dataset.x) == 1) {
-            if (!changedArray.includes(square[num - 2]) && !square[num - 2].classList.contains('changed')) {
-                square[num - 2].classList.add('tempChanged')
-                // console.log('length: ' + changedSquare.length)
-                changedArray.push(square[num - 2])
-            }
-        }
-    }
-
-    // vertical up movement
-    if (square[num - 26] != null) {
-        if (square[num - 1].dataset.color == square[num - 26].dataset.color && square[num - 26].dataset.y < 26) {
-            if (!changedArray.includes(square[num - 26]) && !square[num - 26].classList.contains('changed')) {
-                square[num - 26].classList.add('tempChanged')
-                // console.log('length: ' + changedSquare.length)
-                changedArray.push(square[num - 26])
-            }
-        }
-    }
-    
-    
-    
-}
-
-changedArray.forEach(item => {
-    item.dataset.color = item.dataset.defaultColor
-})
-
-// console.log('length after checks: ' + changedArray.length)
-
-return document.querySelectorAll('.tempChanged').length
-
-}
-
-function paletteSwap(c) {
-    let p = c.getElementsByTagName('div')
-    let root = document.querySelector(":root")
-    root.style.setProperty('--red', p[0].style.backgroundColor)
-    root.style.setProperty('--orange', p[1].style.backgroundColor)
-    root.style.setProperty('--yellow', p[2].style.backgroundColor)
-    root.style.setProperty('--green', p[3].style.backgroundColor)
-    root.style.setProperty('--blue', p[4].style.backgroundColor)
-    root.style.setProperty('--activeRed', p[0].dataset.darken)
-    root.style.setProperty('--activeOrange', p[1].dataset.darken)
-    root.style.setProperty('--activeYellow', p[2].dataset.darken)
-    root.style.setProperty('--activeGreen', p[3].dataset.darken)
-    root.style.setProperty('--activeBlue', p[4].dataset.darken)
-    
-}
-
-function width() {
-    let palContainer = document.querySelector('.widthChange')
-    let ddlArrow = document.querySelector('.ddlArrow')
-    let otherColors = document.querySelector('.otherColors')
-    
-    if (palContainer.classList.contains('test')) {
-        palContainer.classList.remove('test')
-        // ddlArrow.innerText = '🠺'
-        ddlArrow.classList.remove('flip')
-        
-        otherColors.classList.add('hidden')
-    }
-    else {
-        palContainer.classList.add('test')
-        // ddlArrow.innerText = '🠸'
-        ddlArrow.classList.add('flip')
-        otherColors.classList.remove('hidden')
-    }
-}
-
-// Save and Export Boards
-
+let importButton = document.querySelector('.import')
+let exportButton = document.querySelector('.export')
 let loadLabel = document.querySelector('.loadLabel')
 
-function exportBoard() {
-    // loadLabel.value = ''
-    let loadString = ''
-    square.forEach(sq => {
-        if (sq.dataset.defaultColor == 'var(--red)') {
-            loadString += '0'
-        }
-        else if (sq.dataset.defaultColor == 'var(--orange)') {
-            loadString += '1'
-        }
-        else if (sq.dataset.defaultColor == 'var(--yellow)') {
-            loadString += '2'
-        }
-        else if (sq.dataset.defaultColor == 'var(--green)') {
-            loadString += '3'
-        }
-        else if (sq.dataset.defaultColor == 'var(--blue)') {
-            loadString += '4'
-        }
-    })
-    loadLabel.value = loadString
-}
-
-function importBoard() {
-    let loadText = document.querySelector('.loadLabel').value
-    console.log(loadText)
-    let colorArr = []
-
-    for (let x = 0; x < loadText.length; x++) {
-        colorArr.push(parseInt(loadText[x]))
-    }
-    console.log(colorArr)
-    
-    for (let y = 0; y < colorArr.length; y++) {
-        console.log('hi')
-        // square[y].classList.remove('changed')
-        square[y].dataset.color = colorWheel[colorArr[y]]
-        square[y].dataset.defaultColor = colorWheel[colorArr[y]]
-        square[y].style.backgroundColor = colorWheel[colorArr[y]]
-    }
-    square.forEach(sq => {
-        sq.classList.remove('changed')
-    })
-
-    colors.forEach(color => {
-        if (color.classList.contains('grayed')) {
-            color.classList.remove('grayed')
-            color.setAttribute('onclick', 'colorChange(this)')
-        }
-    })
-
-    for (let w = 0; w < colorWheel.length; w++) {
-        // console.log(colorWheel[w])
-        if (colorWheel[w] == changedArray[0].dataset.color) {
-            colors[w].classList.add('grayed')
-        }
-    }
-    counter = 0
-    counterLabel.innerText = '0'
-    square[0].classList.add('changed')
-    changedArray = []
-    changedArray.push(square[0])
-    console.log(changedArray)
-    initialCheck()
-}
-
-
-
-window.addEventListener('resize', calculateSize)
-
-let colorPalette = document.querySelector('.colorPalette')
-let menu = document.querySelector('.menu')
+let menu = document.querySelector('.menu') //screen resizing selectors
 let game = document.querySelector('.left')
 let lBoard = document.querySelector('.scoreWrap')
 let ham = document.querySelector('.ham')
 let xMark = document.querySelector('xMark')
 
-function calculateSize() {
-    let winLength = window.innerWidth
-    let winHeight = window.innerHeight
-    if (winLength >= 1001) {
-        console.log(winLength)
-    let width = winHeight * .65
-    let height = winHeight * .65
-    gameBoard.style.width = width + 'px'
-    gameBoard.style.height = height + 'px'
-    }
-    else if (winLength >= 501){
-        let width = winLength * .70
-        let height = winLength * .70
-        gameBoard.style.width = width + 'px'
-        gameBoard.style.height = height + 'px'
-    }
-    else {
-        let width = winLength * .90
-        let height = winLength * .90
-        gameBoard.style.width = width + 'px'
-        gameBoard.style.height = height + 'px'
-    }
-    
-    // console.log(gameBoard.clientWidth)
-    // square.forEach(sq => {
-    //     sq.style.width = (width * .04) + 'px'
-    //     sq.style.height = (height * .04) + 'px'
-    // })
-    return winLength
-}
 
 
+//event listener for colors
+colorButtons.forEach(color =>
+    color.addEventListener("click", event => {
+        !predicting ? counterLabel.textContent = parseInt(counterLabel.textContent) + 1 : counterLabel.textContent = counterLabel.textContent
+        capturing = true
+        let color = event.target.dataset.color
+        colorButtons.forEach(col => {
+            col.classList.remove('grayed')
+        })
+        if (predicting) {
+            squareArr.forEach(row => {
+                row.forEach(sq => {
+                    sq.color = sq.element.style.backgroundColor
+                    if (sq.tempChecked == true) {
+                        sq.captured = false
+                        sq.tempChecked = false
+                        sq.element.classList.remove('tempChanged')
+                        console.log('removing')
+                    }
+                })
+            })
+        }
+        event.target.classList.add('grayed')
+        squareArr.forEach(row => {
+            row.forEach(sq => {
+                if (sq.captured == true) {
+                    sq.captureCheck(color)
+                }
+            })
+        })
+        capturing = false
+    }))
 
-function changeMenu() {
-    console.log('hi')
+//resetButton
+resetButton.addEventListener('click', () => {
+    resetBoard()
+})
+
+//saveButton
+saveButton.addEventListener('click', () => {
+    !saveButton.classList.contains('active') ? saveButton.classList.add('active') : saveButton.classList.remove('active')
+    saving = !saving
+})
+
+//radarButton
+radarButton.addEventListener('click', () => {
+    !radarButton.classList.contains('active') ? radarButton.classList.add('active') : radarButton.classList.remove('active')
+    predicting = !predicting
+    squareArr.forEach(row => {
+        row.forEach(sq => {
+            sq.color = sq.element.style.backgroundColor
+            if (sq.tempChecked == true) {
+                sq.captured = false
+                sq.tempChecked = false
+                sq.element.classList.remove('tempChanged')
+                console.log('removing')
+            }
+        })
+    })
+    colorButtons.forEach(color => {
+        color.classList.remove('grayed')
+        if (squareArr[0][0].color == color.dataset.color) {
+            color.classList.add('grayed')
+        }
+    })
+})
+
+//Open and close color palette
+palButton.addEventListener('click', () => {
+    !palContainer.classList.contains('open') ? palContainer.classList.add('open') : palContainer.classList.remove('open')
+    palContainer.classList.contains('open') ? ddlArrow.classList.add('flip') : ddlArrow.classList.remove('flip')
+    !palContainer.classList.contains('open') ? otherColors.classList.add('hidden') : otherColors.classList.remove('hidden')
+})
+
+colorOptions.forEach(color => {
+    color.addEventListener('click', () => {
+        let p = color.getElementsByTagName('div') //each color option within element
+        let root = document.querySelector(":root")
+        root.style.setProperty('--red', p[0].style.backgroundColor)
+        root.style.setProperty('--orange', p[1].style.backgroundColor)
+        root.style.setProperty('--yellow', p[2].style.backgroundColor)
+        root.style.setProperty('--green', p[3].style.backgroundColor)
+        root.style.setProperty('--blue', p[4].style.backgroundColor)
+        root.style.setProperty('--activeRed', p[0].dataset.darken)
+        root.style.setProperty('--activeOrange', p[1].dataset.darken)
+        root.style.setProperty('--activeYellow', p[2].dataset.darken)
+        root.style.setProperty('--activeGreen', p[3].dataset.darken)
+        root.style.setProperty('--activeBlue', p[4].dataset.darken)
+    })
+})
+
+exportButton.addEventListener('click', () => {
+    let text = ''
+    loadLabel.textContent = ''
+    squareArr.forEach(row => {
+        row.forEach(sq => {
+            text += colors.indexOf(sq.defaultColor)
+            loadLabel.textContent = text
+        })
+    })
+})
+
+importButton.addEventListener('click', () => {
+    let loadColors = ''
+    loadColors = loadLabel.textContent
+    loadColors == null || loadColors.length < 625 ? console.log('no board exported') : resetBoard(loadColors)
+})
+
+//mobile hamburger menu
+menu.addEventListener('click', () => {
     if (game.classList.contains('opaque')) {
         game.classList.remove('opaque')
         lBoard.classList.remove('opaque')
@@ -699,4 +317,47 @@ function changeMenu() {
         ham.classList.add('fa', 'fa-close')
         colorPalette.classList.remove('hidden')
     }
+})
+
+
+
+window.addEventListener('resize', calculateSize)
+function calculateSize() {
+    let gameBoard = document.querySelector('.board')
+    console.log('running')
+    let winLength = window.innerWidth
+    let winHeight = window.innerHeight
+    console.log(winLength)
+    if (winLength >= 1001) {
+    let width = winHeight * .65
+    let height = winHeight * .65
+    gameBoard.style.width = width + 'px'
+    gameBoard.style.height = height + 'px'
+    console.log(gameBoard.style.width)
+    }
+    else if (winLength >= 501){
+        let width = winLength * .70
+        let height = winLength * .70
+        gameBoard.style.width = width + 'px'
+        gameBoard.style.height = height + 'px'
+    }
+    else {
+        let width = winLength * .90
+        let height = winLength * .90
+        gameBoard.style.width = width + 'px'
+        gameBoard.style.height = height + 'px'
+    }
+    return winLength
 }
+
+window.addEventListener('load', () => {
+    resetBoard()
+    let x = calculateSize()
+    if (x < 1000) {
+        palContainer.classList.add('hidden')
+    }
+})
+
+
+
+
