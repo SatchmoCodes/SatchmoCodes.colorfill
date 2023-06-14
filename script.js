@@ -42,6 +42,7 @@ class Square {
                     !predicting ? squareArr[this.rowIndex][this.colIndex + 1].element.style.backgroundColor = color : squareArr[this.rowIndex][this.colIndex + 1].element.classList.add('tempChanged')
                     squareArr[this.rowIndex][this.colIndex + 1].captureCheck(color)
                     if (!predicting) {
+                        totalCaptured++
                         squareArr[this.rowIndex][this.colIndex + 1].setSquareCounter()
                     }
                 }
@@ -54,6 +55,7 @@ class Square {
                     !predicting ? squareArr[this.rowIndex][this.colIndex - 1].element.style.backgroundColor = color : squareArr[this.rowIndex][this.colIndex - 1].element.classList.add('tempChanged')
                     squareArr[this.rowIndex][this.colIndex - 1].captureCheck(color)
                     if (!predicting) {
+                        totalCaptured++
                         squareArr[this.rowIndex][this.colIndex - 1].setSquareCounter()
                     }
                 }
@@ -66,6 +68,7 @@ class Square {
                     !predicting ? squareArr[this.rowIndex + 1][this.colIndex].element.style.backgroundColor = color : squareArr[this.rowIndex + 1][this.colIndex].element.classList.add('tempChanged')
                     squareArr[this.rowIndex + 1][this.colIndex].captureCheck(color)
                     if (!predicting) {
+                        totalCaptured++
                         squareArr[this.rowIndex + 1][this.colIndex].setSquareCounter()
                     }
                 }
@@ -78,6 +81,7 @@ class Square {
                     !predicting ? squareArr[this.rowIndex - 1][this.colIndex].element.style.backgroundColor = color : squareArr[this.rowIndex - 1][this.colIndex].element.classList.add('tempChanged')
                     squareArr[this.rowIndex - 1][this.colIndex].captureCheck(color)
                     if (!predicting) {
+                        totalCaptured++
                         squareArr[this.rowIndex - 1][this.colIndex].setSquareCounter()
                     }
                 }
@@ -93,6 +97,7 @@ function resetBoard(loadString) {
     greenCounter = 0
     blueCounter = 0
     counterLabel.textContent = 0
+    totalCaptured = 0
     let i = 0 //tracks incrementing for loadString if it isnt null
     capturing = false
     if (saving == true) {
@@ -172,6 +177,7 @@ let orangeCounter = 0
 let yellowCounter = 0
 let greenCounter = 0
 let blueCounter = 0
+let totalCaptured = 0
 
 let redCounterLabel = document.querySelector('.redCounter')
 let orangeCounterLabel = document.querySelector('.orangeCounter')
@@ -179,6 +185,7 @@ let yellowCounterLabel = document.querySelector('.yellowCounter')
 let greenCounterLabel = document.querySelector('.greenCounter')
 let blueCounterLabel = document.querySelector('.blueCounter')
 let counterLabel = document.querySelector('.counter')
+let scoreLabel = document.querySelector('.score')
 
 let importButton = document.querySelector('.import')
 let exportButton = document.querySelector('.export')
@@ -222,6 +229,11 @@ colorButtons.forEach(color =>
             })
         })
         capturing = false
+        if (totalCaptured >= 624) {
+            if (counterLabel.textContent < scoreLabel.textContent || scoreLabel.textContent == 0) {
+                scoreLabel.textContent = counterLabel.textContent
+            } 
+        }
     }))
 
 //resetButton
