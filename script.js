@@ -106,18 +106,17 @@ function resetBoard(loadString) {
         })
     }
     else {
-        loadString == null ? console.log('null') : console.log('load string 0: ' + loadString.charAt(0))
         let randomNumberArr = []
             for (let x = 0; x < 625; x++) {
                 loadString == null ? randomNumberArr[x] = colors[Math.floor(Math.random() * 5)] : randomNumberArr[x] = colors[parseInt(loadString.charAt(x))]
             }
-        console.log(randomNumberArr)
         squareArr = new Array(25).fill(0).map((_, rowIndex) => new Array(25).fill(0).map((_, colIndex) => ({ value: 0, rowIndex, colIndex }))); //initialize new object array
         let boardLoading = document.querySelector('.boardLoading')
         document.querySelector('.board').remove()
         let squareContainer = document.createElement('div')
         squareContainer.classList.add('board')
         boardLoading.parentNode.insertBefore(squareContainer, boardLoading.nextSibling) //reset and insert new board
+        calculateSize()
 
         squareArr.forEach(row => {
             row.forEach(({ value, rowIndex, colIndex }) => {
@@ -210,7 +209,6 @@ colorButtons.forEach(color =>
                         sq.captured = false
                         sq.tempChecked = false
                         sq.element.classList.remove('tempChanged')
-                        console.log('removing')
                     }
                 })
             })
@@ -248,7 +246,6 @@ radarButton.addEventListener('click', () => {
                 sq.captured = false
                 sq.tempChecked = false
                 sq.element.classList.remove('tempChanged')
-                console.log('removing')
             }
         })
     })
@@ -324,16 +321,13 @@ menu.addEventListener('click', () => {
 window.addEventListener('resize', calculateSize)
 function calculateSize() {
     let gameBoard = document.querySelector('.board')
-    console.log('running')
     let winLength = window.innerWidth
     let winHeight = window.innerHeight
-    console.log(winLength)
     if (winLength >= 1001) {
     let width = winHeight * .65
     let height = winHeight * .65
     gameBoard.style.width = width + 'px'
     gameBoard.style.height = height + 'px'
-    console.log(gameBoard.style.width)
     }
     else if (winLength >= 501){
         let width = winLength * .70
