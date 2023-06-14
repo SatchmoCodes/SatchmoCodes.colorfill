@@ -354,10 +354,6 @@ window.addEventListener('load', () => {
     resetBoard()
     let x = calculateSize()
     if (x < 1000) {
-        palContainer.classList.add('hidden')
+        colorPalette.classList.add('hidden')
     }
 })
-
-
-
-
