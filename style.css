@@ -83,15 +83,11 @@ body {
 .gameContainer .board {
     margin: auto;
     display: flex;
-    justify-content: flex-start;
     flex-wrap: wrap;
-    /* max-width: 36vw;
-    max-height: 36vw; */
     max-width: 900px;
     max-height: 900px;
     background-color: rgb(255, 255, 255);
     border: 2px solid black; 
-    flex-basis: 100%;
 }
 
 .left {
@@ -423,8 +419,6 @@ body {
 .square {
     display: flex;
     flex-basis: 4%;
-    max-width: 36px;
-    max-height: 36px;
     /* border: 1px solid black; */
     transition: background-color 0.2s;
 }
@@ -458,7 +452,7 @@ body {
     display: block;
 }
 
-.test {
+.open {
     width: 75% !important;
 }
 
