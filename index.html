@@ -9,10 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="script.js" defer></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="menu" onclick="changeMenu()">
+    <div class="menu">
         <h2 class="fa fa-list ham"></h2>
     </div>
     <section class="gameContainer">
@@ -20,26 +19,20 @@
             <h1 class="counter">0</h1>
             <div class="boardLoading">
                 <textarea class="loadLabel"></textarea>
-                <button class="export" onclick="exportBoard()">Export</button>
-                <button class="import" onclick="importBoard()">Import</button>
+                <button class="export">Export</button>
+                <button class="import">Import</button>
             </div>
             <div class="board">
-                <div class="interior">
-
-                </div>
         </div>
             <section class="buttonContainer">
                 <div class="extraRow">
-                    <div class="resetButton" onclick="reset()">
+                    <div class="resetButton">
                         <h3 class="fa fa-rotate-right"></h3>
                     </div>
-                    <div class="saveButton" onclick="save()">
+                    <div class="saveButton">
                         <h3 class="fa fa-save"></h3>
                     </div>
-                    <div class="eraseButton" onclick="del()">
-                        <h3 class="fa fa-eraser"></h3>
-                    </div>
-                    <div class="predictButton" onclick="predictSwitch()">
+                    <div class="predictButton">
                         <h3><iconify-icon icon="mdi:radar"></iconify-icon></h3>
                     </div>  
                 </div>
@@ -87,35 +80,35 @@
                         <div class="palSquare blue" style="background-color: var(--blue)"></div>
                     </div>
                     <div class="otherColors hidden">
-                        <div class="defaultColor pal" onclick="paletteSwap(this)">
+                        <div class="defaultColor pal option">
                             <div class="palSquare red" style="background-color:hsl(0, 100%, 40%);" data-darken="hsl(0, 100%, 30%)"></div>
                             <div class="palSquare orange" style="background-color: hsl(22, 100%, 50%);" data-darken="hsl(22, 100%, 40%)"></div>
                             <div class="palSquare yellow" style="background-color: hsl(60, 100%, 50%);" data-darken="hsl(60, 100%, 40%)"></div>
                             <div class="palSquare green" style="background-color: hsl(130, 100%, 15%);" data-darken="hsl(130, 100%, 10%)"></div>
                             <div class="palSquare blue" style="background-color: hsl(242, 69%, 49%);" data-darken="hsl(242, 100%, 30%)"></div>
                         </div>
-                        <div class="comp1 pal" onclick="paletteSwap(this)">
+                        <div class="comp1 pal option">
                             <div class="palSquare red" style="background-color: hsl(33, 90.8%, 12.7%);" data-darken="hsl(33, 90.8%, 8%)"></div>
                             <div class="palSquare orange" style="background-color: hsl(33, 89.8%, 26.9%);" data-darken="hsl(33, 89.8%, 18%)"></div>
                             <div class="palSquare yellow" style="background-color: hsl(25, 95.4%, 42.7%);" data-darken="hsl(25, 95.4%, 34%)"></div>
                             <div class="palSquare green" style="background-color: hsl(221, 69.2%, 43.3%);" data-darken="hsl(221, 69.2%, 35%)"></div>
                             <div class="palSquare blue" style="background-color: hsl(213, 68.6%, 90%);" data-darken="hsl(213, 68.6%, 80%)"></div>
                         </div>
-                        <div class="comp2 pal" onclick="paletteSwap(this)">
+                        <div class="comp2 pal option">
                             <div class="palSquare red" style="background-color: hsl(2,72%,51%);" data-darken="hsl(2,72%,42%)"></div>
                             <div class="palSquare orange" style="background-color: hsl(358,83%,35%);" data-darken="hsl(358,83%,28%)"></div>
                             <div class="palSquare yellow" style="background-color: hsl(211,88%,32%);" data-darken="hsl(211,88%,24%)"></div>
                             <div class="palSquare green" style="background-color: hsl(0,0%,39%);" data-darken="hsl(0,0%,30%)"></div>
                             <div class="palSquare blue" style="background-color: hsl(0,0%,14%);" data-darken="hsl(0,0%,5%)"></div>
                         </div>
-                        <div class="comp3 pal" onclick="paletteSwap(this)">
+                        <div class="comp3 pal option">
                             <div class="palSquare red" style="background-color: hsl(51,42%,56%);" data-darken="hsl(51,42%,46%)"></div>
                             <div class="palSquare orange" style="background-color: hsl(53,40%,42%);" data-darken="hsl(53,40%,32%)"></div>
                             <div class="palSquare yellow" style="background-color: hsl(49,33%,32%);" data-darken="hsl(49,33%,25%)"></div>
                             <div class="palSquare green" style="background-color: hsl(60,20%,15%);" data-darken="hsl(60,20%,50%)"></div>
                             <div class="palSquare blue" style="background-color: hsl(13,43%,21%);" data-darken="hsl(13,43%,15%)"></div>
                         </div>
-                        <div class="comp4 pal" onclick="paletteSwap(this)">
+                        <div class="comp4 pal option">
                             <div class="palSquare red" style="background-color: hsl(164,95%,43%);" data-darken="hsl(164,95%,33%)"></div>
                             <div class="palSquare orange" style="background-color: hsl(240,100%,98%);" data-darken="hsl(240,100%,88%)"></div>
                             <div class="palSquare yellow" style="background-color: hsl(43,100%,70%);" data-darken="hsl(43,100%,60%)"></div>
@@ -123,7 +116,7 @@
                             <div class="palSquare blue" style="background-color: hsl(200,43%,7%);" data-darken="hsl(200,43%,3%)"></div>
                         </div>
                     </div>
-                    <div class="ddl" onclick="width()">
+                    <div class="ddl">
                         <h3 class="ddlArrow fa fa-play"></h3>
                         <!-- <h3>&#129080;</h3> -->
                     </div>
