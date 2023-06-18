@@ -307,7 +307,8 @@ exportButton.addEventListener('click', () => {
 importButton.addEventListener('click', () => {
     let loadColors = ''
     loadColors = loadLabel.textContent
-    loadColors == null || loadColors.length < 625 ? console.log('no board exported') : resetBoard(loadColors)
+   // loadColors == null || loadColors.length < 625 ? console.log('no board exported') : resetBoard(loadColors)
+    resetBoard(loadColors)
 })
 
 //mobile hamburger menu
