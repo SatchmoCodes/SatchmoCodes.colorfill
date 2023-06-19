@@ -91,6 +91,7 @@ class Square {
 }
 
 function resetBoard(loadString) {
+    console.log('hi')
     redCounter = 0
     orangeCounter = 0
     yellowCounter = 0
@@ -294,20 +295,20 @@ colorOptions.forEach(color => {
 })
 
 exportButton.addEventListener('click', () => {
+    console.log('balls')
     let text = ''
-    loadLabel.textContent = ''
     squareArr.forEach(row => {
         row.forEach(sq => {
             text += colors.indexOf(sq.defaultColor)
-            loadLabel.textContent = text
         })
     })
+    loadLabel.value = text
 })
 
 importButton.addEventListener('click', () => {
     let loadColors = ''
-    loadColors = loadLabel.textContent
-    loadColors == null || loadColors.length < 625 ? console.log('no board exported') : resetBoard(loadColors)
+    loadColors = loadLabel.value
+    loadColors == '' || loadColors.length < 625 ? console.log('no board exported') : resetBoard(loadColors)
 })
 
 //mobile hamburger menu
@@ -327,8 +328,6 @@ menu.addEventListener('click', () => {
         colorPalette.classList.remove('hidden')
     }
 })
-
-
 
 window.addEventListener('resize', calculateSize)
 function calculateSize() {
